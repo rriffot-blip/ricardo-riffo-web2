@@ -11,9 +11,9 @@ export default function Footer() {
         <div>
           <h4>Sitio</h4>
           <ul>
-            <li><a href="/#propiedades">Propiedades</a></li>
-            <li><a href="/#nosotros">Sobre mí</a></li>
-            <li><a href="/#consejos">Consejos</a></li>
+            <li><a href="/propiedades">Propiedades</a></li>
+            <li><a href="/sobre-mi">Sobre mí</a></li>
+            <li><a href="/contacto">Contacto</a></li>
           </ul>
         </div>
         <div>

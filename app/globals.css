@@ -236,6 +236,62 @@ footer.site { border-top: 1px solid var(--line); padding: 48px 0 60px; margin-to
 
 .empty { text-align: center; padding: 60px 0; color: var(--ink-soft); }
 
+/* Listing page */
+.listheader { padding: 40px 0 8px; }
+.listheader h1 { font-size: 1.9rem; margin: 0 0 8px; }
+.listheader p { color: var(--ink-soft); margin: 0; }
+
+.filters {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  padding: 20px 0 32px; border-bottom: 1px solid var(--line); margin-bottom: 32px;
+}
+.filters select {
+  font-family: inherit; font-size: 0.9rem; padding: 10px 14px;
+  border-radius: var(--radius-s); border: 1px solid var(--line);
+  background: var(--paper-raise); color: var(--ink);
+}
+.filters .clear {
+  font-size: 0.9rem; color: var(--accent); background: none; border: none; cursor: pointer;
+  padding: 10px 4px;
+}
+
+.listgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding-bottom: 90px; }
+.listgrid .card .img { height: 180px; }
+.resultcount { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 20px; }
+
+/* Simple content pages (Sobre mí / Contacto) */
+.pagehero { padding: 56px 0 16px; }
+.pagehero h1 { font-size: 2.1rem; margin: 0 0 14px; max-width: 20ch; }
+.pagehero p.lede { color: var(--ink-soft); font-size: 1.05rem; max-width: 56ch; margin: 0; }
+
+.timeline { display: grid; gap: 24px; margin: 40px 0 90px; max-width: 62ch; }
+.timeline div { padding-left: 20px; border-left: 2px solid var(--line); }
+.timeline div b { display: block; font-family: 'Space Grotesk', sans-serif; margin-bottom: 4px; }
+.timeline div span { color: var(--ink-soft); font-size: 0.92rem; }
+
+.contactgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; padding: 40px 0 90px; align-items: start; }
+.contactgrid h2 { font-size: 1.3rem; margin: 0 0 18px; }
+.formcard { background: var(--paper-raise); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 28px; }
+.formcard label { display: block; font-size: 0.85rem; color: var(--ink-soft); margin: 16px 0 6px; }
+.formcard label:first-child { margin-top: 0; }
+.formcard input, .formcard select, .formcard textarea {
+  width: 100%; font-family: inherit; font-size: 0.92rem; padding: 11px 14px;
+  border-radius: var(--radius-s); border: 1px solid var(--line);
+  background: var(--paper); color: var(--ink);
+}
+.formcard textarea { resize: vertical; }
+.formcard .btn { margin-top: 20px; width: 100%; justify-content: center; }
+
+.contactinfo div { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.contactinfo div:first-child { padding-top: 0; }
+.contactinfo b { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 1rem; margin-bottom: 4px; }
+.contactinfo span { color: var(--ink-soft); font-size: 0.9rem; }
+
+@media (max-width: 880px) {
+  .listgrid { grid-template-columns: 1fr; }
+  .contactgrid { grid-template-columns: 1fr; gap: 32px; }
+}
+
 @media (max-width: 880px) {
   nav.mainnav { display: none; }
   .hero { grid-template-columns: 1fr; padding-top: 44px; }

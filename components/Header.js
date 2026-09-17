@@ -8,12 +8,12 @@ export default function Header() {
           Ricardo Riffo <span>Propiedades</span>
         </Link>
         <nav className="mainnav">
-          <Link href="/#propiedades">Propiedades</Link>
-          <Link href="/#nosotros">Sobre mí</Link>
+          <Link href="/propiedades">Propiedades</Link>
+          <Link href="/sobre-mi">Sobre mí</Link>
           <Link href="/#consejos">Consejos</Link>
-          <Link href="/#contacto">Contacto</Link>
+          <Link href="/contacto">Contacto</Link>
         </nav>
-        <a className="btn accent" href="#contacto">
+        <a className="btn accent" href="#">
           Hablemos por WhatsApp
         </a>
       </div>
