@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PropertyCard from "@/components/PropertyCard";
+import PhotoGallery from "@/components/PhotoGallery";
 import { getPropertyBySlug, getSimilarProperties } from "@/lib/properties";
 import { formatPrice, placeholderTheme } from "@/lib/format";
 
@@ -37,22 +38,7 @@ export default async function PropertyPage({ params }) {
           </div>
         </div>
 
-        <div className="gallery">
-          <div
-            className={`main ${photos[0] ? "" : theme}`}
-            style={photos[0] ? { backgroundImage: `url(${photos[0]})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
-          />
-          <div className="side">
-            <div
-              className={photos[1] ? "" : "grad2"}
-              style={photos[1] ? { backgroundImage: `url(${photos[1]})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
-            />
-            <div
-              className={`${photos[2] ? "" : "grad3"} ${photos.length > 2 ? "more" : ""}`}
-              style={photos[2] ? { backgroundImage: `url(${photos[2]})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
-            />
-          </div>
-        </div>
+        <PhotoGallery photos={photos} theme={theme} />
 
         <div className="layout">
           <div>
