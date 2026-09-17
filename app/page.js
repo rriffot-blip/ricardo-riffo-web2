@@ -1,9 +1,12 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PropertyCard from "@/components/PropertyCard";
-import { properties } from "@/lib/properties";
+import { getProperties } from "@/lib/properties";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const properties = await getProperties();
   const featured = properties.slice(0, 5);
   const cardClasses = ["c1", "c2", "c3", "c4", "c5"];
 
@@ -20,13 +23,13 @@ export default function HomePage() {
             </p>
             <div className="hero-cta">
               <a className="btn accent" href="#propiedades">Ver propiedades disponibles</a>
-              <a className="btn ghost" href="#nosotros">Conóceme</a>
+              <a className="btn ghost" href="/sobre-mi">Conóceme</a>
             </div>
             <div className="searchbar">
               <select defaultValue=""><option value="" disabled>Comuna</option><option>Ñuñoa</option><option>La Reina</option><option>Providencia</option><option>Macul</option></select>
               <select defaultValue=""><option value="" disabled>Tipo</option><option>Departamento</option><option>Casa</option><option>Oficina</option></select>
               <select defaultValue=""><option value="" disabled>Arriendo o venta</option><option>Arriendo</option><option>Venta</option></select>
-              <button className="btn">Buscar</button>
+              <a className="btn" href="/propiedades">Buscar</a>
             </div>
           </div>
           <div className="hero-collage">
@@ -37,7 +40,7 @@ export default function HomePage() {
         </section>
 
         <div className="facts">
-          <div className="fact"><b>60+</b><span>propiedades en arriendo activas</span></div>
+          <div className="fact"><b>{properties.length}</b><span>propiedades cargadas hoy</span></div>
           <div className="fact"><b>7</b><span>comunas con cobertura</span></div>
           <div className="fact"><b>100%</b><span>visitadas y grabadas por mí</span></div>
           <div className="fact"><b>24h</b><span>tiempo promedio de respuesta</span></div>
@@ -49,13 +52,20 @@ export default function HomePage() {
               <h2>Disponibles esta semana</h2>
               <div className="sub">{properties.length} propiedades cargadas</div>
             </div>
-            <a href="#">Ver todas las propiedades →</a>
+            <a href="/propiedades">Ver todas las propiedades →</a>
           </div>
-          <div className="plist">
-            {featured.map((property, i) => (
-              <PropertyCard key={property.slug} property={property} className={cardClasses[i]} />
-            ))}
-          </div>
+
+          {featured.length > 0 ? (
+            <div className="plist">
+              {featured.map((property, i) => (
+                <PropertyCard key={property.slug} property={property} className={cardClasses[i]} />
+              ))}
+            </div>
+          ) : (
+            <div className="empty">
+              <p>Todavía no hay propiedades cargadas. En cuanto Ricardo agregue la primera desde el panel de administración, va a aparecer acá.</p>
+            </div>
+          )}
         </section>
 
         <section id="nosotros" className="about">
@@ -70,7 +80,7 @@ export default function HomePage() {
               Hoy administro más de 60 propiedades en arriendo y estoy creciendo en ventas. Si buscas algo
               específico, escríbeme directo — te respondo yo, no un sistema automático.
             </p>
-            <a className="btn accent" href="#contacto">Escribir a Ricardo</a>
+            <a className="btn accent" href="/contacto">Escribir a Ricardo</a>
           </div>
         </section>
 
@@ -119,7 +129,7 @@ export default function HomePage() {
             <h2>¿Buscas propiedad o quieres vender la tuya?</h2>
             <p>Escríbeme directo por WhatsApp y te respondo con opciones reales, no un formulario genérico.</p>
           </div>
-          <a className="btn accent" href="#">Escribir por WhatsApp</a>
+          <a className="btn accent" href="/contacto">Ir a contacto</a>
         </section>
       </main>
       <Footer />

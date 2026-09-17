@@ -1,13 +1,17 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ListingClient from "@/components/ListingClient";
-import { properties } from "@/lib/properties";
+import { getProperties } from "@/lib/properties";
 
 export const metadata = {
   title: "Propiedades disponibles — Ricardo Riffo Propiedades",
 };
 
-export default function PropiedadesPage() {
+export const dynamic = "force-dynamic";
+
+export default async function PropiedadesPage() {
+  const properties = await getProperties();
+
   return (
     <>
       <Header />

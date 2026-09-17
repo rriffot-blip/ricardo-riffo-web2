@@ -3,74 +3,81 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PropertyCard from "@/components/PropertyCard";
-import { properties, getPropertyBySlug, getSimilarProperties } from "@/lib/properties";
+import { getPropertyBySlug, getSimilarProperties } from "@/lib/properties";
+import { formatPrice, placeholderTheme } from "@/lib/format";
 
-export function generateStaticParams() {
-  return properties.map((p) => ({ slug: p.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function PropertyPage({ params }) {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getPropertyBySlug(slug);
   if (!property) notFound();
 
-  const similar = getSimilarProperties(property);
+  const similar = await getSimilarProperties(property);
+  const photos = property.photo_urls?.length ? property.photo_urls : [];
+  const theme = placeholderTheme(property);
 
   return (
     <>
       <Header />
       <main className="wrap">
         <div className="crumb">
-          <Link href="/#propiedades">Propiedades</Link> / {property.commune} / {property.title}
+          <Link href="/propiedades">Propiedades</Link> / {property.commune} / {property.title}
         </div>
 
         <div className="titlebar">
           <div>
             <span className="status">{property.status}</span>
             <h1>{property.title}</h1>
-            <div className="loc">{property.address}</div>
+            <div className="loc">{property.address || property.commune}</div>
           </div>
           <div className="pricebox">
-            <div className="price">{property.price}</div>
-            <div className="sub">{property.priceSub}</div>
+            <div className="price">{formatPrice(property)}</div>
+            <div className="sub">{property.price_note}</div>
           </div>
         </div>
 
         <div className="gallery">
-          <div className={`main ${property.photoTheme}`} />
+          <div
+            className={`main ${photos[0] ? "" : theme}`}
+            style={photos[0] ? { backgroundImage: `url(${photos[0]})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+          />
           <div className="side">
-            <div className="grad2" />
-            <div className="grad3 more" />
+            <div
+              className={photos[1] ? "" : "grad2"}
+              style={photos[1] ? { backgroundImage: `url(${photos[1]})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+            />
+            <div
+              className={`${photos[2] ? "" : "grad3"} ${photos.length > 2 ? "more" : ""}`}
+              style={photos[2] ? { backgroundImage: `url(${photos[2]})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+            />
           </div>
         </div>
 
         <div className="layout">
           <div>
             <div className="specs">
-              <div><b>{property.area} m²</b><span>Superficie</span></div>
+              <div><b>{property.area ?? "—"} m²</b><span>Superficie</span></div>
               <div><b>{property.bedrooms}</b><span>Dormitorios</span></div>
               <div><b>{property.bathrooms}</b><span>Baños</span></div>
               <div><b>{property.parking}</b><span>Estacionamiento</span></div>
             </div>
 
-            <div className="block">
-              <h2>Descripción</h2>
-              <p>{property.description}</p>
-            </div>
-
-            <div className="block">
-              <h2>Recorrido en video</h2>
-              <div className="video"><div className="play">▶</div></div>
-            </div>
-
-            <div className="block">
-              <h2>Qué incluye</h2>
-              <div className="amenities">
-                {property.amenities.map((item) => (
-                  <div key={item}>{item}</div>
-                ))}
+            {property.description && (
+              <div className="block">
+                <h2>Descripción</h2>
+                <p>{property.description}</p>
               </div>
-            </div>
+            )}
+
+            {property.video_url && (
+              <div className="block">
+                <h2>Recorrido en video</h2>
+                <a className="video" href={property.video_url} target="_blank" rel="noopener noreferrer">
+                  <div className="play">▶</div>
+                </a>
+              </div>
+            )}
 
             <div className="block">
               <h2>Ubicación</h2>
@@ -82,7 +89,7 @@ export default async function PropertyPage({ params }) {
             <div className="contactcard">
               <div className="broker">
                 <div className="avatar" />
-                <div><b>{property.broker}</b><span>Corredor a cargo</span></div>
+                <div><b>{property.broker_name || "Ricardo Riffo"}</b><span>Corredor a cargo</span></div>
               </div>
               <textarea rows={3} placeholder={`Hola Ricardo, me interesa "${property.title}"...`} />
               <a className="btn accent" href="#">Enviar por WhatsApp</a>
