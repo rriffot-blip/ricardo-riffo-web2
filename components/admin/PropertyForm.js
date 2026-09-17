@@ -35,6 +35,26 @@ export default function PropertyForm({ initial = null }) {
   const [newFiles, setNewFiles] = useState([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [generating, setGenerating] = useState(false);
+
+  async function handleGenerateDescription() {
+    setGenerating(true);
+    setError("");
+    try {
+      const res = await fetch("/api/generate-description", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "No se pudo generar la descripción.");
+      update("description", data.description);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setGenerating(false);
+    }
+  }
 
   function update(field, value) {
     setForm((f) => ({ ...f, [field]: value }));
@@ -212,7 +232,17 @@ export default function PropertyForm({ initial = null }) {
         </div>
 
         <div className="field full">
-          <label>Descripción</label>
+          <label style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span>Descripción</span>
+            <button
+              type="button"
+              onClick={handleGenerateDescription}
+              disabled={generating || !form.title || !form.commune}
+              style={{ fontSize: "0.82rem", color: "var(--accent)", background: "none", border: "1px solid var(--line)", borderRadius: 4, padding: "5px 10px", cursor: "pointer" }}
+            >
+              {generating ? "Generando..." : "✨ Generar con IA"}
+            </button>
+          </label>
           <textarea rows={4} value={form.description} onChange={(e) => update("description", e.target.value)} />
         </div>
 
