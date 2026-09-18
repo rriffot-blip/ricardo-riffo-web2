@@ -93,8 +93,11 @@ export default function PropertyForm({ initial = null }) {
       const uploadedUrls = await uploadNewPhotos(slug);
       const photo_urls = [...existingPhotos, ...uploadedUrls];
 
+      // eslint-disable-next-line no-unused-vars
+      const { id, created_at, slug: _slug, ...formFields } = form;
+
       const payload = {
-        ...form,
+        ...formFields,
         price_amount: Number(form.price_amount) || 0,
         bedrooms: Number(form.bedrooms) || 0,
         bathrooms: Number(form.bathrooms) || 0,
