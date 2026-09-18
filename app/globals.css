@@ -217,6 +217,10 @@ footer.site { border-top: 1px solid var(--line); padding: 48px 0 60px; margin-to
 .video { aspect-ratio: 16/9; border-radius: var(--radius-m); border: 1px solid var(--line); background: linear-gradient(135deg,#7A4626,#C77A46); position: relative; }
 .video .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2rem; }
 
+.tiktok-embed-wrap { max-width: 325px; margin: 0 auto; }
+.tiktok-embed-wrap iframe { width: 100%; aspect-ratio: 9/16; border: none; border-radius: var(--radius-m); display: block; }
+.clip iframe { width: 100%; height: 100%; border: none; }
+
 .sidebar { position: sticky; top: 90px; }
 .contactcard { background: var(--paper-raise); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 24px; }
 .broker { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }

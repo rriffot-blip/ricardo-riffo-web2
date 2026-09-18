@@ -6,6 +6,7 @@ import PropertyCard from "@/components/PropertyCard";
 import PhotoGallery from "@/components/PhotoGallery";
 import { getPropertyBySlug, getSimilarProperties } from "@/lib/properties";
 import { formatPrice, placeholderTheme } from "@/lib/format";
+import { getTiktokEmbedId } from "@/lib/tiktok";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,7 @@ export default async function PropertyPage({ params }) {
   const similar = await getSimilarProperties(property);
   const photos = property.photo_urls?.length ? property.photo_urls : [];
   const theme = placeholderTheme(property);
+  const tiktokId = getTiktokEmbedId(property.video_url);
 
   return (
     <>
@@ -59,9 +61,21 @@ export default async function PropertyPage({ params }) {
             {property.video_url && (
               <div className="block">
                 <h2>Recorrido en video</h2>
-                <a className="video" href={property.video_url} target="_blank" rel="noopener noreferrer">
-                  <div className="play">▶</div>
-                </a>
+                {tiktokId ? (
+                  <div className="tiktok-embed-wrap">
+                    <iframe
+                      src={`https://www.tiktok.com/embed/v2/${tiktokId}`}
+                      allow="autoplay; encrypted-media; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                      title="Recorrido en video"
+                    />
+                  </div>
+                ) : (
+                  <a className="video" href={property.video_url} target="_blank" rel="noopener noreferrer">
+                    <div className="play">▶</div>
+                  </a>
+                )}
               </div>
             )}
 

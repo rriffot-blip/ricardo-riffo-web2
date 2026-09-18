@@ -1,7 +1,10 @@
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PropertyCard from "@/components/PropertyCard";
 import { getProperties } from "@/lib/properties";
+import { getTiktokEmbedId } from "@/lib/tiktok";
+import { placeholderTheme } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -9,6 +12,7 @@ export default async function HomePage() {
   const properties = await getProperties();
   const featured = properties.slice(0, 5);
   const cardClasses = ["c1", "c2", "c3", "c4", "c5"];
+  const videoProperties = properties.filter((p) => p.video_url).slice(0, 4);
 
   return (
     <>
@@ -84,21 +88,38 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="clips">
-          <div className="sectionhead">
-            <div>
-              <h2>Recorridos en video</h2>
-              <div className="sub">Los mismos videos que subo a TikTok e Instagram</div>
+        {videoProperties.length > 0 && (
+          <section className="clips">
+            <div className="sectionhead">
+              <div>
+                <h2>Recorridos en video</h2>
+                <div className="sub">Los mismos videos que subo a TikTok e Instagram</div>
+              </div>
+              <a href="/propiedades">Ver todas →</a>
             </div>
-            <a href="#">Ver todos →</a>
-          </div>
-          <div className="cliprow">
-            <div className="clip grad1"><div className="play">▶</div></div>
-            <div className="clip grad2"><div className="play">▶</div></div>
-            <div className="clip grad3"><div className="play">▶</div></div>
-            <div className="clip grad1"><div className="play">▶</div></div>
-          </div>
-        </section>
+            <div className="cliprow">
+              {videoProperties.map((p) => {
+                const id = getTiktokEmbedId(p.video_url);
+                return (
+                  <Link key={p.slug} href={`/propiedades/${p.slug}`} className="clip">
+                    {id ? (
+                      <iframe
+                        src={`https://www.tiktok.com/embed/v2/${id}`}
+                        allow="autoplay; encrypted-media; picture-in-picture"
+                        loading="lazy"
+                        title={p.title}
+                      />
+                    ) : (
+                      <div className={placeholderTheme(p)} style={{ width: "100%", height: "100%" }}>
+                        <div className="play">▶</div>
+                      </div>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         <section id="consejos">
           <div className="sectionhead">
