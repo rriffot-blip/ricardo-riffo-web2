@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Ruler, BedDouble, Bath, Car } from "lucide-react";
 import { formatPrice, placeholderTheme } from "@/lib/format";
 
 export default function PropertyCard({ property, className = "" }) {
@@ -26,10 +27,10 @@ export default function PropertyCard({ property, className = "" }) {
             {property.title.length > 40 ? `${property.type} — ${property.commune}` : property.title}
           </p>
           <div className="meta">
-            {property.area && <span>{property.area} m²</span>}
-            {property.bedrooms > 0 && <span>{property.bedrooms} dorm.</span>}
-            <span>{property.bathrooms} baño{property.bathrooms !== 1 ? "s" : ""}</span>
-            {property.parking > 0 && <span>Estac.</span>}
+            {property.area && <span><Ruler size={14} strokeWidth={1.75} />{property.area} m²</span>}
+            {property.bedrooms > 0 && <span><BedDouble size={14} strokeWidth={1.75} />{property.bedrooms}</span>}
+            <span><Bath size={14} strokeWidth={1.75} />{property.bathrooms}</span>
+            {property.parking > 0 && <span><Car size={14} strokeWidth={1.75} /></span>}
           </div>
         </div>
       </Link>

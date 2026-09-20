@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Ruler, BedDouble, Bath, Car, Warehouse } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PropertyCard from "@/components/PropertyCard";
@@ -104,11 +105,17 @@ export default async function PropertyPage({ params }) {
         <div className="layout">
           <div>
             <div className="specs">
-              <div><b>{property.area ?? "—"} m²</b><span>Superficie</span></div>
-              <div><b>{property.bedrooms}</b><span>Dormitorios</span></div>
-              <div><b>{property.bathrooms}</b><span>Baños</span></div>
-              <div><b>{property.parking}</b><span>Estacionamiento</span></div>
+              <div><Ruler size={20} strokeWidth={1.5} /><b>{property.area ?? "—"} m²</b><span>Superficie</span></div>
+              <div><BedDouble size={20} strokeWidth={1.5} /><b>{property.bedrooms}</b><span>Dormitorios</span></div>
+              <div><Bath size={20} strokeWidth={1.5} /><b>{property.bathrooms}</b><span>Baños</span></div>
+              <div><Car size={20} strokeWidth={1.5} /><b>{property.parking}</b><span>Estacionamiento</span></div>
             </div>
+
+            {property.storage && (
+              <p style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--ink-soft)", fontSize: "0.88rem", margin: "-20px 0 32px" }}>
+                <Warehouse size={16} strokeWidth={1.75} /> Incluye bodega
+              </p>
+            )}
 
             {property.description && (
               <div className="block">

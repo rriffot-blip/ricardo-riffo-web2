@@ -139,6 +139,8 @@ nav.mainnav a:hover { color: var(--ink); }
 .card .price { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; margin: 0 0 4px; }
 .card .loc { color: var(--ink-soft); font-size: 0.88rem; margin: 0 0 10px; }
 .card .meta { display: flex; gap: 14px; font-size: 0.82rem; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 10px; flex-wrap: wrap; }
+.card .meta span { display: inline-flex; align-items: center; gap: 4px; }
+.card .meta svg { flex-shrink: 0; opacity: 0.8; }
 .card a.cardlink { text-decoration: none; display: block; }
 
 .c1 { grid-column: span 3; } .c1 .img { height: 260px; }
@@ -207,6 +209,7 @@ footer.site { border-top: 1px solid var(--line); padding: 48px 0 60px; margin-to
 .specs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 32px; }
 .specs div b { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; }
 .specs div span { color: var(--ink-soft); font-size: 0.82rem; }
+.specs div svg { color: var(--accent); margin-bottom: 6px; }
 
 .block { margin-bottom: 40px; }
 .block h2 { font-size: 1.2rem; margin: 0 0 14px; }
