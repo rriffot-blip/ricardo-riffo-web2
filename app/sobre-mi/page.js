@@ -19,7 +19,13 @@ export default function SobreMiPage() {
         </div>
 
         <section className="about" style={{ marginTop: 56 }}>
-          <div className="photo" />
+          <div className="photo" style={{ position: "relative", overflow: "hidden" }}>
+            <img
+              src="/images/ricardo-riffo.jpg"
+              alt="Ricardo Riffo, corredor de propiedades"
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }}
+            />
+          </div>
           <div>
             <h2>Cómo trabajo</h2>
             <p>
