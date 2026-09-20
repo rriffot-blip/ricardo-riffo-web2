@@ -27,6 +27,7 @@ export default function AdminDashboard() {
         <h1>Tus propiedades</h1>
         <div style={{ display: "flex", gap: 10 }}>
           <a href="/admin/nueva" className="btn accent">+ Agregar propiedad</a>
+          <a href="/admin/blog" className="btn ghost">Blog</a>
           <button onClick={handleLogout} className="btn ghost">Cerrar sesión</button>
         </div>
       </div>

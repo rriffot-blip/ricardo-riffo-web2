@@ -14,6 +14,8 @@ export default function Footer() {
           <h4>Sitio</h4>
           <ul>
             <li><a href="/propiedades">Propiedades</a></li>
+            <li><a href="/propietarios">Propietarios</a></li>
+            <li><a href="/blog">Blog</a></li>
             <li><a href="/sobre-mi">Sobre mí</a></li>
             <li><a href="/contacto">Contacto</a></li>
           </ul>

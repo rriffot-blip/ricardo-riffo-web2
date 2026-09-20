@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PropertyCard from "@/components/PropertyCard";
 import { getProperties } from "@/lib/properties";
+import { getPublishedPosts } from "@/lib/posts";
 import { getTiktokEmbedId } from "@/lib/tiktok";
 import { placeholderTheme } from "@/lib/format";
 
@@ -13,6 +14,7 @@ export default async function HomePage() {
   const featured = properties.slice(0, 5);
   const cardClasses = ["c1", "c2", "c3", "c4", "c5"];
   const videoProperties = properties.filter((p) => p.video_url).slice(0, 4);
+  const recentPosts = await getPublishedPosts(3);
 
   return (
     <>
@@ -121,29 +123,23 @@ export default async function HomePage() {
           </section>
         )}
 
-        <section id="consejos">
-          <div className="sectionhead">
-            <div><h2>Consejos para arrendar y vender</h2></div>
-            <a href="#">Ver todos →</a>
-          </div>
-          <div className="posts">
-            <div className="post">
-              <span className="tag">Arriendo</span>
-              <h3>Qué documentos pedir antes de firmar un contrato</h3>
-              <p>Una checklist corta para evitar problemas después de mudarte.</p>
+        {recentPosts.length > 0 && (
+          <section id="blog">
+            <div className="sectionhead">
+              <div><h2>Blog inmobiliario</h2></div>
+              <a href="/blog">Ver todos →</a>
             </div>
-            <div className="post">
-              <span className="tag">Venta</span>
-              <h3>Cómo se define el precio de tasación en Santiago</h3>
-              <p>Los factores que más influyen, explicados sin tecnicismos.</p>
+            <div className="posts">
+              {recentPosts.map((post) => (
+                <a key={post.slug} href={`/blog/${post.slug}`} className="post" style={{ textDecoration: "none" }}>
+                  <span className="tag">{post.category}</span>
+                  <h3>{post.title}</h3>
+                  {post.excerpt && <p>{post.excerpt}</p>}
+                </a>
+              ))}
             </div>
-            <div className="post">
-              <span className="tag">Comunas</span>
-              <h3>Ñuñoa vs. La Reina: diferencias para arrendar</h3>
-              <p>Precios, conectividad y tipo de propiedad disponible en cada una.</p>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <section id="contacto" className="ctaband">
           <div>
