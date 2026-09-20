@@ -50,6 +50,7 @@ export default async function PropertyPage({ params }) {
   const photos = property.photo_urls?.length ? property.photo_urls : [];
   const theme = placeholderTheme(property);
   const tiktokId = getTiktokEmbedId(property.video_url);
+  const mapQuery = property.address ? `${property.address}, ${property.commune}, Chile` : `${property.commune}, Chile`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -147,7 +148,17 @@ export default async function PropertyPage({ params }) {
 
             <div className="block">
               <h2>Ubicación</h2>
-              <div className="mapbox" />
+              <div className="mapbox">
+                <iframe
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`Ubicación de ${property.title}`}
+                />
+              </div>
             </div>
           </div>
 
