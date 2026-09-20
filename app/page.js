@@ -16,6 +16,13 @@ export default async function HomePage() {
   const videoProperties = properties.filter((p) => p.video_url).slice(0, 4);
   const recentPosts = await getPublishedPosts(3);
 
+  const heroCandidates = properties.filter((p) => p.photo_urls?.length);
+  const heroPhotos = [
+    heroCandidates[0] ? { url: heroCandidates[0].photo_urls[0], label: `${heroCandidates[0].type} · ${heroCandidates[0].commune}` } : null,
+    heroCandidates[1] ? { url: heroCandidates[1].photo_urls[0], label: `${heroCandidates[1].type} · ${heroCandidates[1].commune}` } : null,
+    heroCandidates[2] ? { url: heroCandidates[2].photo_urls[0], label: null } : null,
+  ];
+
   return (
     <>
       <Header />
@@ -39,9 +46,31 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="hero-collage">
-            <div className="ph grad1 p1"><div className="tag">Depto 2D/1B · Ñuñoa</div></div>
-            <div className="ph grad2 p2"><div className="tag">Casa 3D/2B · La Reina</div></div>
-            <div className="ph grad3 p3" />
+            <div className={`ph p1 ${heroPhotos[0] ? "" : "grad1"}`}>
+              {heroPhotos[0] ? (
+                <>
+                  <img src={heroPhotos[0].url} alt={heroPhotos[0].label} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  <div className="tag">{heroPhotos[0].label}</div>
+                </>
+              ) : (
+                <div className="tag">Depto 2D/1B · Ñuñoa</div>
+              )}
+            </div>
+            <div className={`ph p2 ${heroPhotos[1] ? "" : "grad2"}`}>
+              {heroPhotos[1] ? (
+                <>
+                  <img src={heroPhotos[1].url} alt={heroPhotos[1].label} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  <div className="tag">{heroPhotos[1].label}</div>
+                </>
+              ) : (
+                <div className="tag">Casa 3D/2B · La Reina</div>
+              )}
+            </div>
+            <div className={`ph p3 ${heroPhotos[2] ? "" : "grad3"}`}>
+              {heroPhotos[2] && (
+                <img src={heroPhotos[2].url} alt="Propiedad publicada por Ricardo Riffo" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              )}
+            </div>
           </div>
         </section>
 
