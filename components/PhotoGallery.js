@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-export default function PhotoGallery({ photos = [], theme = "grad1" }) {
+export default function PhotoGallery({ photos = [], theme = "grad1", title = "Propiedad" }) {
   const [openIndex, setOpenIndex] = useState(null);
 
   const close = useCallback(() => setOpenIndex(null), []);
@@ -43,24 +43,18 @@ export default function PhotoGallery({ photos = [], theme = "grad1" }) {
   return (
     <>
       <div className="gallery">
-        <div
-          className="main"
-          style={{ backgroundImage: `url(${photos[0]})`, backgroundSize: "cover", backgroundPosition: "center" }}
-          onClick={() => setOpenIndex(0)}
-        />
+        <div className="main" onClick={() => setOpenIndex(0)}>
+          <img src={photos[0]} alt={`${title} — foto principal`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        </div>
         <div className="side">
           {photos[1] && (
-            <div
-              style={{ backgroundImage: `url(${photos[1]})`, backgroundSize: "cover", backgroundPosition: "center" }}
-              onClick={() => setOpenIndex(1)}
-            />
+            <div onClick={() => setOpenIndex(1)}>
+              <img src={photos[1]} alt={`${title} — foto 2`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            </div>
           )}
           {photos[2] && (
-            <div
-              className={extra > 0 ? "more" : ""}
-              style={{ backgroundImage: `url(${photos[2]})`, backgroundSize: "cover", backgroundPosition: "center", position: "relative" }}
-              onClick={() => setOpenIndex(2)}
-            >
+            <div className={extra > 0 ? "more" : ""} style={{ position: "relative" }} onClick={() => setOpenIndex(2)}>
+              <img src={photos[2]} alt={`${title} — foto 3`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
               {extra > 0 && (
                 <span style={{ position: "absolute", inset: 0, background: "rgba(23,48,46,0.55)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem", borderRadius: "inherit" }}>
                   +{extra} fotos

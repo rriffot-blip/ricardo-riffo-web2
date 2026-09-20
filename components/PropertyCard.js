@@ -7,10 +7,14 @@ export default function PropertyCard({ property, className = "" }) {
   return (
     <div className={`card ${className}`}>
       <Link href={`/propiedades/${property.slug}`} className="cardlink">
-        <div
-          className={`img ${photo ? "" : placeholderTheme(property)}`}
-          style={photo ? { backgroundImage: `url(${photo})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
-        >
+        <div className={`img ${photo ? "" : placeholderTheme(property)}`}>
+          {photo && (
+            <img
+              src={photo}
+              alt={`${property.title} — ${property.type} en ${property.operation.toLowerCase()} en ${property.commune}`}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          )}
           <span className="status">{property.status}</span>
         </div>
         <div className="body">

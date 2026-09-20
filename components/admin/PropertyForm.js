@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { slugify, randomSuffix } from "@/lib/slug";
+import { compressImage } from "@/lib/imageCompress";
 
 const TYPES = ["Departamento", "Casa", "Oficina", "Local", "Terreno"];
 const STATUSES = ["Disponible", "Reservado", "Arrendado", "Vendido"];
@@ -71,9 +72,10 @@ export default function PropertyForm({ initial = null }) {
   async function uploadNewPhotos(slug) {
     const urls = [];
     for (const file of newFiles) {
-      const ext = file.name.split(".").pop();
+      const compressed = await compressImage(file);
+      const ext = compressed.name.split(".").pop();
       const path = `${slug}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-      const { error: uploadError } = await supabase.storage.from("property-photos").upload(path, file);
+      const { error: uploadError } = await supabase.storage.from("property-photos").upload(path, compressed);
       if (uploadError) {
         throw new Error("No se pudo subir una foto: " + uploadError.message);
       }

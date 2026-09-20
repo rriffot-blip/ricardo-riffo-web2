@@ -1,8 +1,28 @@
 import "./globals.css";
 
+const SITE_URL = "https://ricardoriffo.cl";
+const description = "Arriendo y venta de propiedades en Santiago, visitadas y grabadas personalmente por Ricardo Riffo.";
+
 export const metadata = {
-  title: "Ricardo Riffo Propiedades",
-  description: "Arriendo y venta de propiedades en Santiago, visitadas y grabadas personalmente.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Ricardo Riffo Propiedades",
+    template: "%s — Ricardo Riffo Propiedades",
+  },
+  description,
+  openGraph: {
+    title: "Ricardo Riffo Propiedades",
+    description,
+    url: SITE_URL,
+    siteName: "Ricardo Riffo Propiedades",
+    locale: "es_CL",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ricardo Riffo Propiedades",
+    description,
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -11,6 +11,35 @@ import { getTiktokEmbedId } from "@/lib/tiktok";
 
 export const dynamic = "force-dynamic";
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const property = await getPropertyBySlug(slug);
+  if (!property) return {};
+
+  const title = property.title;
+  const description = property.description
+    ? property.description.slice(0, 155)
+    : `${property.type} en ${property.operation.toLowerCase()} en ${property.commune}. ${formatPrice(property)}${property.operation === "Arriendo" ? " al mes" : ""}.`;
+  const image = property.photo_urls?.[0];
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: image ? [{ url: image }] : undefined,
+      type: "website",
+    },
+    twitter: {
+      card: image ? "summary_large_image" : "summary",
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
+}
+
 export default async function PropertyPage({ params }) {
   const { slug } = await params;
   const property = await getPropertyBySlug(slug);
@@ -21,8 +50,37 @@ export default async function PropertyPage({ params }) {
   const theme = placeholderTheme(property);
   const tiktokId = getTiktokEmbedId(property.video_url);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    name: property.title,
+    description: property.description || undefined,
+    url: `https://ricardoriffo.cl/propiedades/${property.slug}`,
+    image: photos.length ? photos : undefined,
+    datePosted: property.created_at,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: property.commune,
+      streetAddress: property.address || undefined,
+      addressCountry: "CL",
+    },
+    offers: {
+      "@type": "Offer",
+      price: property.price_amount,
+      priceCurrency: property.price_currency,
+      availability: property.status === "Disponible" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    },
+    numberOfRooms: property.bedrooms,
+    numberOfBathroomsTotal: property.bathrooms,
+    floorSize: property.area ? { "@type": "QuantitativeValue", value: property.area, unitCode: "MTK" } : undefined,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
       <main className="wrap">
         <div className="crumb">
@@ -41,7 +99,7 @@ export default async function PropertyPage({ params }) {
           </div>
         </div>
 
-        <PhotoGallery photos={photos} theme={theme} />
+        <PhotoGallery photos={photos} theme={theme} title={property.title} />
 
         <div className="layout">
           <div>
