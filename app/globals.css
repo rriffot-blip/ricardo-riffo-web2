@@ -197,7 +197,7 @@ footer.site { border-top: 1px solid var(--line); padding: 48px 0 60px; margin-to
 .pricebox .sub { color: var(--ink-soft); font-size: 0.85rem; }
 
 .gallery { display: grid; grid-template-columns: 1.6fr 1fr; gap: 12px; height: 420px; margin-bottom: 40px; }
-.gallery .main { border-radius: var(--radius-m); overflow: hidden; }
+.gallery .main { border-radius: var(--radius-m); overflow: hidden; position: relative; }
 .gallery .side { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; }
 .gallery .side div { border-radius: var(--radius-m); overflow: hidden; position: relative; }
 .gallery .side div.more::after {

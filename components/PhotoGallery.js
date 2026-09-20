@@ -44,17 +44,17 @@ export default function PhotoGallery({ photos = [], theme = "grad1", title = "Pr
     <>
       <div className="gallery">
         <div className="main" onClick={() => setOpenIndex(0)}>
-          <img src={photos[0]} alt={`${title} — foto principal`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <img src={photos[0]} alt={`${title} — foto principal`} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
         </div>
         <div className="side">
           {photos[1] && (
             <div onClick={() => setOpenIndex(1)}>
-              <img src={photos[1]} alt={`${title} — foto 2`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              <img src={photos[1]} alt={`${title} — foto 2`} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             </div>
           )}
           {photos[2] && (
             <div className={extra > 0 ? "more" : ""} style={{ position: "relative" }} onClick={() => setOpenIndex(2)}>
-              <img src={photos[2]} alt={`${title} — foto 3`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              <img src={photos[2]} alt={`${title} — foto 3`} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
               {extra > 0 && (
                 <span style={{ position: "absolute", inset: 0, background: "rgba(23,48,46,0.55)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem", borderRadius: "inherit" }}>
                   +{extra} fotos
