@@ -1,3 +1,5 @@
+import { whatsappLink } from "@/lib/whatsapp";
+
 export default function Footer() {
   return (
     <footer className="site">
@@ -19,14 +21,14 @@ export default function Footer() {
         <div>
           <h4>Contacto</h4>
           <ul>
-            <li><a href="#">WhatsApp</a></li>
+            <li><a href={whatsappLink("Hola Ricardo, quiero consultar por una propiedad.")} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
             <li><a href="#">[email protected]</a></li>
           </ul>
         </div>
         <div>
           <h4>Redes</h4>
           <ul>
-            <li><a href="#">TikTok</a></li>
+            <li><a href="https://www.tiktok.com/@ricardoriffot" target="_blank" rel="noopener noreferrer">TikTok</a></li>
             <li><a href="#">Instagram</a></li>
           </ul>
         </div>

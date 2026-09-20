@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ContactForm from "@/components/ContactForm";
+import { whatsappLink } from "@/lib/whatsapp";
 
 export const metadata = {
   title: "Contacto — Ricardo Riffo Propiedades",
@@ -21,27 +23,7 @@ export default function ContactoPage() {
         <div className="contactgrid">
           <div className="formcard">
             <h2>Escríbeme</h2>
-            <form>
-              <label htmlFor="nombre">Nombre</label>
-              <input id="nombre" type="text" placeholder="Tu nombre" />
-
-              <label htmlFor="telefono">Teléfono o correo</label>
-              <input id="telefono" type="text" placeholder="+56 9 ... o [email protected]" />
-
-              <label htmlFor="interes">¿Qué buscas?</label>
-              <select id="interes" defaultValue="">
-                <option value="" disabled>Selecciona una opción</option>
-                <option>Arrendar una propiedad</option>
-                <option>Comprar una propiedad</option>
-                <option>Vender o arrendar la mía</option>
-                <option>Otra consulta</option>
-              </select>
-
-              <label htmlFor="mensaje">Mensaje</label>
-              <textarea id="mensaje" rows={4} placeholder="Cuéntame en qué te puedo ayudar..." />
-
-              <button type="submit" className="btn accent">Enviar mensaje</button>
-            </form>
+            <ContactForm />
           </div>
 
           <div>
@@ -64,7 +46,15 @@ export default function ContactoPage() {
                 <span>TikTok e Instagram — recorridos en video de cada propiedad</span>
               </div>
             </div>
-            <a className="btn accent" href="#" style={{ marginTop: 20 }}>Escribir por WhatsApp ahora</a>
+            <a
+              className="btn accent"
+              href={whatsappLink("Hola Ricardo, quiero consultar por una propiedad.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginTop: 20 }}
+            >
+              Escribir por WhatsApp ahora
+            </a>
           </div>
         </div>
       </main>

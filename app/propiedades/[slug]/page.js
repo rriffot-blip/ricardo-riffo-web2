@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PropertyCard from "@/components/PropertyCard";
+import ContactCard from "@/components/ContactCard";
 import PhotoGallery from "@/components/PhotoGallery";
 import { getPropertyBySlug, getSimilarProperties } from "@/lib/properties";
 import { formatPrice, placeholderTheme } from "@/lib/format";
@@ -86,15 +87,7 @@ export default async function PropertyPage({ params }) {
           </div>
 
           <div className="sidebar">
-            <div className="contactcard">
-              <div className="broker">
-                <div className="avatar" />
-                <div><b>{property.broker_name || "Ricardo Riffo"}</b><span>Corredor a cargo</span></div>
-              </div>
-              <textarea rows={3} placeholder={`Hola Ricardo, me interesa "${property.title}"...`} />
-              <a className="btn accent" href="#">Enviar por WhatsApp</a>
-              <a className="btn ghost" href="#">Agendar visita</a>
-            </div>
+            <ContactCard property={property} />
           </div>
         </div>
 
