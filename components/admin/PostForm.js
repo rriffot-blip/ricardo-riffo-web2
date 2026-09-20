@@ -27,6 +27,27 @@ export default function PostForm({ initial = null }) {
   const [newImageFile, setNewImageFile] = useState(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [generating, setGenerating] = useState(false);
+
+  async function handleGenerate() {
+    setGenerating(true);
+    setError("");
+    try {
+      const res = await fetch("/api/generate-post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: form.title, category: form.category }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "No se pudo generar el artículo.");
+      update("body", data.body);
+      if (data.excerpt) update("excerpt", data.excerpt);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setGenerating(false);
+    }
+  }
 
   function update(field, value) {
     setForm((f) => ({ ...f, [field]: value }));
@@ -144,8 +165,16 @@ export default function PostForm({ initial = null }) {
         </div>
 
         <div className="field full">
-          <label>
-            Contenido — puedes usar **negrita**, [texto](https://link.com) para links, y ![descripción](https://url-de-imagen.jpg) para insertar una imagen
+          <label style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span>Contenido — puedes usar **negrita**, [texto](https://link.com) para links, y ![descripción](https://url-de-imagen.jpg) para insertar una imagen</span>
+            <button
+              type="button"
+              onClick={handleGenerate}
+              disabled={generating || !form.title}
+              style={{ fontSize: "0.82rem", color: "var(--accent)", background: "none", border: "1px solid var(--line)", borderRadius: 4, padding: "5px 10px", cursor: "pointer", whiteSpace: "nowrap", marginLeft: 12 }}
+            >
+              {generating ? "Generando..." : "✨ Generar con IA"}
+            </button>
           </label>
           <textarea rows={14} value={form.body} onChange={(e) => update("body", e.target.value)} required style={{ fontFamily: "monospace", fontSize: "0.9rem" }} />
         </div>
