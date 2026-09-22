@@ -50,7 +50,9 @@ export default async function PropertyPage({ params }) {
   const photos = property.photo_urls?.length ? property.photo_urls : [];
   const theme = placeholderTheme(property);
   const tiktokId = getTiktokEmbedId(property.video_url);
-  const mapQuery = property.address ? `${property.address}, ${property.commune}, Chile` : `${property.commune}, Chile`;
+  const showAddress = property.show_exact_address !== false && !!property.address;
+  const locationLine = showAddress ? property.address : property.commune;
+  const mapQuery = showAddress ? `${property.address}, ${property.commune}, Chile` : `${property.commune}, Chile`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -63,7 +65,7 @@ export default async function PropertyPage({ params }) {
     address: {
       "@type": "PostalAddress",
       addressLocality: property.commune,
-      streetAddress: property.address || undefined,
+      streetAddress: showAddress ? property.address : undefined,
       addressCountry: "CL",
     },
     offers: {
@@ -93,11 +95,14 @@ export default async function PropertyPage({ params }) {
           <div>
             <span className="status">{property.status}</span>
             <h1>{property.title}</h1>
-            <div className="loc">{property.address || property.commune}</div>
+            <div className="loc">{locationLine}</div>
           </div>
           <div className="pricebox">
             <div className="price">{formatPrice(property)}</div>
             <div className="sub">{property.price_note}</div>
+            {property.common_expenses > 0 && (
+              <div className="sub">+ ${Number(property.common_expenses).toLocaleString("es-CL")} gastos comunes{property.common_expenses_note ? ` (${property.common_expenses_note})` : ""}</div>
+            )}
           </div>
         </div>
 
@@ -112,9 +117,23 @@ export default async function PropertyPage({ params }) {
               <div><Car size={20} strokeWidth={1.5} /><b>{property.parking}</b><span>Estacionamiento</span></div>
             </div>
 
-            {property.storage && (
-              <p style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--ink-soft)", fontSize: "0.88rem", margin: "-20px 0 32px" }}>
-                <Warehouse size={16} strokeWidth={1.75} /> Incluye bodega
+            {property.storage_count > 0 && (
+              <p style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--ink-soft)", fontSize: "0.88rem", margin: "-20px 0 12px" }}>
+                <Warehouse size={16} strokeWidth={1.75} /> {property.storage_count > 1 ? `${property.storage_count} bodegas` : "Incluye bodega"}
+              </p>
+            )}
+
+            {(property.floor || property.orientation) && (
+              <p style={{ color: "var(--ink-soft)", fontSize: "0.88rem", margin: "0 0 24px" }}>
+                {property.floor && <>Piso {property.floor}{property.floor_total ? ` de ${property.floor_total}` : ""}</>}
+                {property.floor && property.orientation && " · "}
+                {property.orientation && <>Orientación {property.orientation}</>}
+              </p>
+            )}
+
+            {property.has_promotion && (
+              <p style={{ color: "var(--accent)", fontWeight: 500, margin: "0 0 24px" }}>
+                🏷️ {property.promotion_text || property.promotion_type}
               </p>
             )}
 
@@ -122,6 +141,25 @@ export default async function PropertyPage({ params }) {
               <div className="block">
                 <h2>Descripción</h2>
                 <p>{property.description}</p>
+              </div>
+            )}
+
+            {property.features?.length > 0 && (
+              <div className="block">
+                <h2>Características</h2>
+                <div className="amenities">
+                  {property.features.map((f) => <div key={f}>{f}</div>)}
+                </div>
+              </div>
+            )}
+
+            {property.operation === "Arriendo" && (property.commission_type || property.deposit_type) && (
+              <div className="block">
+                <h2>Condiciones de arriendo</h2>
+                <p>
+                  {property.commission_type && <>Comisión de corretaje: {property.commission_type}{property.commission_installments ? ` — ${property.commission_installments}` : ""}<br /></>}
+                  {property.deposit_type && <>Garantía: {property.deposit_type}{property.deposit_installments ? ` — ${property.deposit_installments}` : ""}</>}
+                </p>
               </div>
             )}
 

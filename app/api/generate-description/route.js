@@ -10,7 +10,11 @@ export async function POST(request) {
   const body = await request.json();
   const {
     title, type, operation, price_amount, price_currency, price_note,
-    commune, address, bedrooms, bathrooms, area, parking, storage, status,
+    common_expenses, common_expenses_note,
+    commune, address, bedrooms, bathrooms, area, total_area, parking, storage_count, status,
+    floor, floor_total, orientation, features,
+    commission_type, commission_installments, deposit_type, deposit_installments,
+    has_promotion, promotion_type, promotion_text,
   } = body;
 
   const details = `
@@ -18,14 +22,22 @@ Título: ${title || "(sin título)"}
 Tipo: ${type}
 Operación: ${operation}
 Precio: ${price_amount} ${price_currency} ${price_note ? `(${price_note})` : ""}
+Gastos comunes: ${common_expenses ? `${common_expenses} ${common_expenses_note ? `(${common_expenses_note})` : ""}` : "no especificados"}
 Comuna: ${commune}
 Dirección: ${address || "(no especificada)"}
 Dormitorios: ${bedrooms}
 Baños: ${bathrooms}
-Superficie: ${area ? `${area} m²` : "(no especificada)"}
+Superficie útil: ${area ? `${area} m²` : "(no especificada)"}
+Superficie total: ${total_area ? `${total_area} m²` : "(no especificada)"}
 Estacionamientos: ${parking}
-Bodega: ${storage ? "Sí" : "No"}
+Bodegas: ${storage_count || 0}
+Piso: ${floor || "(no especificado)"}${floor_total ? ` de ${floor_total}` : ""}
+Orientación: ${orientation || "(no especificada)"}
+Características: ${features?.length ? features.join(", ") : "(ninguna especificada)"}
 Estado: ${status}
+${operation === "Arriendo" ? `Comisión: ${commission_type || "no especificada"}${commission_installments ? ` (${commission_installments})` : ""}
+Garantía: ${deposit_type || "no especificada"}${deposit_installments ? ` (${deposit_installments})` : ""}` : ""}
+${has_promotion ? `Promoción: ${promotion_text || promotion_type}` : ""}
 `.trim();
 
   const prompt = `Eres un corredor de propiedades chileno escribiendo la descripción de una propiedad para su ficha en un sitio web. Usa un tono cercano, directo y profesional, sin frases genéricas de marketing ni exageraciones. Escribe en español de Chile, en un solo párrafo de 3 a 5 oraciones. No inventes detalles que no están en los datos (por ejemplo, no menciones vista, luminosidad, o remodelaciones si no se especificaron). Basándote SOLO en estos datos, escribe la descripción:
