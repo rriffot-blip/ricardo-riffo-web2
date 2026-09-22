@@ -8,7 +8,7 @@ export default function Footer() {
           <span className="word">
             Ricardo Riffo <span style={{ color: "var(--accent)" }}>Propiedades</span>
           </span>
-          <p>Arriendo y venta de propiedades en Santiago, visitadas y grabadas personalmente.</p>
+          <p>Propiedades reales. Visitas reales. Información real.</p>
         </div>
         <div>
           <h4>Sitio</h4>
@@ -24,7 +24,7 @@ export default function Footer() {
           <h4>Contacto</h4>
           <ul>
             <li><a href={whatsappLink("Hola Ricardo, quiero consultar por una propiedad.")} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
-            <li><a href="#">[email protected]</a></li>
+            <li><a href="mailto:rriffot@gmail.com">rriffot@gmail.com</a></li>
           </ul>
         </div>
         <div>
