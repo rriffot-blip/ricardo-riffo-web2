@@ -4,6 +4,7 @@ import PropertyCard from "@/components/PropertyCard";
 import { getProperties } from "@/lib/properties";
 import { getPublishedPosts } from "@/lib/posts";
 import { whatsappLink } from "@/lib/whatsapp";
+import { placeholderTheme } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -155,17 +156,30 @@ export default async function HomePage() {
         </section>
 
         {recentPosts.length > 0 && (
-          <section id="blog">
+          <section id="blog" className="hblog">
             <div className="sectionhead">
-              <div><h2>Blog inmobiliario</h2></div>
+              <div>
+                <h2>Consejos y actualidad inmobiliaria</h2>
+                <div className="sub">Información útil para arrendar, vender y encontrar propiedades en Santiago.</div>
+              </div>
               <a href="/blog">Ver todos →</a>
             </div>
-            <div className="posts">
+            <div className="hblog-grid">
               {recentPosts.map((post) => (
-                <a key={post.slug} href={`/blog/${post.slug}`} className="post" style={{ textDecoration: "none" }}>
-                  <span className="tag">{post.category}</span>
-                  <h3>{post.title}</h3>
-                  {post.excerpt && <p>{post.excerpt}</p>}
+                <a key={post.slug} href={`/blog/${post.slug}`} className="hblog-card">
+                  <div className="hblog-cover">
+                    {post.featured_image_url ? (
+                      <img src={post.featured_image_url} alt={post.title} />
+                    ) : (
+                      <div className={placeholderTheme(post)} style={{ position: "absolute", inset: 0 }} />
+                    )}
+                  </div>
+                  <div className="hblog-body">
+                    <span className="hblog-tag">{post.category}</span>
+                    <h3>{post.title}</h3>
+                    {post.excerpt && <p>{post.excerpt}</p>}
+                    <span className="hblog-readmore">Leer artículo →</span>
+                  </div>
                 </a>
               ))}
             </div>
