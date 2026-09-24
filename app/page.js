@@ -27,18 +27,21 @@ export default async function HomePage() {
       <main className="wrap">
         <section className="hero">
           <div>
-            <h1>Propiedades que conozco de verdad. No solo de foto.</h1>
+            <h1>¿Estás buscando tu próximo departamento?</h1>
             <p className="lede">
-              Visito personalmente cada propiedad, la recorro, la grabo y te cuento lo que realmente necesitas
-              saber antes de visitarla.
+              Yo te ayudo a encontrarlo. Visito personalmente las propiedades, las conozco y te muestro lo que
+              realmente necesitas saber antes de visitarlas.
             </p>
             <p className="lede">
-              Arriendos y ventas en Santiago. Sin vueltas y con información real.
+              Revisa las propiedades disponibles y encuentra la que buscas.
             </p>
             <div className="hero-cta">
-              <a className="btn accent" href="#propiedades">Ver propiedades disponibles</a>
-              <a className="btn ghost" href="/sobre-mi">Conocerme</a>
+              <a className="btn accent" href="/propiedades">Ver propiedades disponibles</a>
+              <a className="btn ghost" href="/sobre-mi">Conóceme</a>
             </div>
+            <p style={{ color: "var(--ink-soft)", fontSize: "0.82rem", letterSpacing: "0.01em", margin: "-14px 0 28px" }}>
+              Propiedades reales. Visitas reales. Información real.
+            </p>
             <div className="searchbar">
               <select defaultValue=""><option value="" disabled>Comuna</option><option>Ñuñoa</option><option>La Reina</option><option>Providencia</option><option>Macul</option></select>
               <select defaultValue=""><option value="" disabled>Tipo</option><option>Departamento</option><option>Casa</option><option>Oficina</option></select>
@@ -115,17 +118,24 @@ export default async function HomePage() {
           <div>
             <h2>Hola, soy Ricardo</h2>
             <p>
-              No trabajo detrás de un escritorio publicando propiedades que no conozco.
+              Si estás buscando una propiedad, probablemente tengas muchas preguntas antes de decidirte:
+              ¿cómo es realmente?, ¿el barrio es bueno?, ¿vale la pena visitarla?, ¿qué requisitos necesito?
             </p>
             <p>
-              Visito personalmente los departamentos, los recorro, los grabo y te muestro tanto lo bueno como
-              lo que deberías saber antes de ir a visitarlos.
+              Por eso me gusta conocer personalmente las propiedades que publico. Las visito, las recorro y
+              las muestro tal como son, para que puedas tomar una decisión con la mayor información posible.
             </p>
             <p>
-              Llevo años trabajando en el rubro inmobiliario y hoy mi objetivo es simple: ayudarte a encontrar
-              una propiedad y hacer que el proceso sea mucho más fácil.
+              Llevo más de 15 años trabajando en el rubro inmobiliario y durante todo este tiempo he aprendido
+              que encontrar una propiedad no se trata solamente de encontrar cuatro paredes y un precio.
             </p>
-            <a className="btn accent" href="/contacto">Hablar con Ricardo</a>
+            <p>
+              Se trata de encontrar un lugar que realmente funcione para ti.
+            </p>
+            <p>
+              Ese es el trabajo que quiero hacer contigo.
+            </p>
+            <a className="btn accent" href="/sobre-mi">Conóceme</a>
           </div>
         </section>
 
